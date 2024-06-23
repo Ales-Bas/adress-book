@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 
 import {
     Select,
@@ -19,11 +19,11 @@ export function SelectDemo() {
             <SelectContent>
                 <SelectGroup>
                     <SelectLabel>Организация</SelectLabel>
-                    <SelectItem value="apple">ООО "Название организации"</SelectItem>
-                    <SelectItem value="banana">ООО "Название организации"</SelectItem>
-                    <SelectItem value="blueberry">ООО "Название организации"</SelectItem>
-                    <SelectItem value="grapes">ООО "Название организации"</SelectItem>
-                    <SelectItem value="pineapple">ООО "Название организации"</SelectItem>
+                    <SelectItem value="apple">ООО Название организации</SelectItem>
+                    <SelectItem value="banana">ООО Название организации</SelectItem>
+                    <SelectItem value="blueberry">ООО Название организации</SelectItem>
+                    <SelectItem value="grapes">ООО Название организации</SelectItem>
+                    <SelectItem value="pineapple">ООО Название организации</SelectItem>
                 </SelectGroup>
             </SelectContent>
         </Select>
