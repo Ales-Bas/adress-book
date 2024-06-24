@@ -3,6 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -40,5 +41,8 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "email",
         header: "Почта",
+        cell: ({ cell, row }) => {
+            return <Link className="text-blue" href={`mailto:${row.original.email}`}>{row.original.email}</Link>
+        }
     },
 ]

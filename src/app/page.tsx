@@ -7,7 +7,7 @@ export default async function Home() {
   const session = await getServerSession(nextAuthConfig);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-12">
       {session ? (
         <div>
           <DemoPage />

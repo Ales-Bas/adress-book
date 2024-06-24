@@ -21,10 +21,37 @@ import {
 } from "@/components/ui/table"
 import React from "react"
 import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import { Printer } from "lucide-react"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+}
+
+interface TableElement extends HTMLElement {
+    outerHTML: string;
+}
+
+function printTable(tableElement: TableElement): void {
+    const windowPrint = window.open('', '_blank');
+    if (!windowPrint) return;
+
+    windowPrint.document.write('<html><head><title>Print</title>');
+    windowPrint.document.write('<style>');
+    windowPrint.document.write('svg { display: none;} thead, tr {height: 30px}; td {padding-left: 5px;}');
+    windowPrint.document.write('button { border: none; background: white;} a {text-decoration: none; color: black;}');
+    windowPrint.document.write('</style>');
+    windowPrint.document.write('</head><body>');
+    windowPrint.document.write(tableElement.outerHTML);
+    windowPrint.document.write('</body></html>');
+    windowPrint.document.close();
+
+    try {
+        windowPrint.print();
+    } catch (error) {
+        console.error("Printing failed:", error);
+    }
 }
 
 export function DataTable<TData, TValue>({
@@ -51,7 +78,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="rounded-md border">
-            <div className="flex items-center ml-2 py-4">
+            <div className="flex items-center justify-between ml-2 py-4">
                 <Input
                     placeholder="Поиск по ФИО..."
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -60,8 +87,16 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
+                <Button
+                    variant="ghost"
+                    className="mr-2"
+                    onClick={() => printTable(document.getElementById('table') as HTMLTableElement)}
+                >
+                    <Printer />
+                </Button>
             </div>
-            <Table>
+
+            <Table id="table">
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
