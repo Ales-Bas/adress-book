@@ -12,6 +12,7 @@ export type Staff = {
     name: string
     post: string
     phone: string
+    inphone: string
     email: string
 }
 
@@ -37,6 +38,10 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "phone",
         header: "Телефон",
+    },
+    {
+        accessorKey: "inphone",
+        header: "Внутренний тел.",
     },
     {
         accessorKey: "email",

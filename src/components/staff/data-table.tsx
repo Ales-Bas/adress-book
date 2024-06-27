@@ -39,7 +39,7 @@ function printTable(tableElement: TableElement): void {
 
     windowPrint.document.write('<html><head><title>Print</title>');
     windowPrint.document.write('<style>');
-    windowPrint.document.write('svg { display: none;} thead, tr {height: 30px}; td {padding-left: 5px;}');
+    windowPrint.document.write('svg { display: none;} thead, tr {height: 30px}; td {padding-left: 5px; text-align: center;}');
     windowPrint.document.write('button { border: none; background: white;} a {text-decoration: none; color: black;}');
     windowPrint.document.write('</style>');
     windowPrint.document.write('</head><body>');

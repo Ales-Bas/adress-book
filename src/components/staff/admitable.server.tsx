@@ -96,11 +96,11 @@ async function getData(): Promise<Staff[]> {
     ]
 }
 
-export default async function DemoPage() {
+export default async function AdminPage() {
     const data = await getData()
 
     return (
-        <div className="grid lg:grid-cols-[240px_minmax(850px,_1fr)] grid-cols-1 gap-2 lg:justify-items-end">
+        <div className=" grid grid-cols-[250px_minmax(900px,_1fr)] gap-2 justify-items-center">
             <NewSelect />
             <DataTable columns={columns} data={data} />
         </div>
