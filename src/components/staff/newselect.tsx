@@ -86,16 +86,16 @@ export function NewSelect() {
         <div>
 
             {
-                data.map((items: any) => <Menubar className="flex-col items-start space-y-2 mb-2">
+                data.map((items: any, key: string) => <Menubar key={items.id} className="flex-col items-start space-y-2 mb-2">
                     <MenubarMenu  >
                         <MenubarTrigger className="hover:cursor-pointer" value={items.id}>{items.name}</MenubarTrigger>
                         <MenubarContent>
-                            {items.deparr.map((item: any) => <MenubarSub>
+                            {items.deparr.map((item: any, key: string) => <MenubarSub key={item.id}>
                                 <MenubarSeparator />
                                 <MenubarSubTrigger className="hover:cursor-pointer">{item.name}</MenubarSubTrigger>
                                 <MenubarSubContent>
-                                    {item.otdels.map((i: any) => <MenubarItem className="hover:cursor-pointer">
-                                        <MenubarSeparator />
+                                    {item.otdels.map((i: any, key: string) => <MenubarItem key={i.id} className="hover:cursor-pointer">
+
                                         {i.name}
 
                                     </MenubarItem>)}
