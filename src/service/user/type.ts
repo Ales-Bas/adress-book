@@ -1,5 +1,6 @@
 export type UserId = string;
 export type Role = "ADMIN" | "USER";
+export type NullString = string | null;
 
 export const ROLES: Record<Role, Role> = {
     ADMIN: "ADMIN",
@@ -11,8 +12,8 @@ export type UserEntity = {
     email: string;
     role: Role;
     emailVerified?: Date | null;
-    name?: string | null;
-    image?: string | null;
+    name?: NullString;
+    image?: NullString;
 };
 
 export type SessionEntity = {
