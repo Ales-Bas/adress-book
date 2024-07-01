@@ -14,6 +14,7 @@ export type Staff = {
     phone: string
     inphone: string
     email: string
+    mobile: string
 }
 
 export const columns: ColumnDef<Staff>[] = [
@@ -37,11 +38,11 @@ export const columns: ColumnDef<Staff>[] = [
     },
     {
         accessorKey: "phone",
-        header: "Телефон",
+        header: "Внешний (городской) телефон",
     },
     {
         accessorKey: "inphone",
-        header: "Внутренний тел.",
+        header: "Внутренний телефон",
     },
     {
         accessorKey: "email",
@@ -49,5 +50,9 @@ export const columns: ColumnDef<Staff>[] = [
         cell: ({ cell, row }) => {
             return <Link className="text-blue" href={`mailto:${row.original.email}`}>{row.original.email}</Link>
         }
+    },
+    {
+        accessorKey: "mobile",
+        header: "Мобильный телефон",
     },
 ]

@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AppHeader } from "@/components/app-header/app-header";
 import { AppProvider } from "./utils/_providers/app-providers.";
+import AuthorizedGuard from "./utils/authorized-guard";
 
 const fontSans = FontSans({
   subsets: ["latin", "cyrillic"],
@@ -30,7 +31,9 @@ export default function RootLayout({
       )}>
         <AppHeader />
         <AppProvider>
+
           {children}
+
         </AppProvider>
       </body>
     </html>

@@ -12,6 +12,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 00",
             inphone: "1234",
             email: "I@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed53f",
@@ -20,6 +21,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 01",
             inphone: "1234",
             email: "i@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed54f",
@@ -28,6 +30,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 02",
             inphone: "1234",
             email: "s@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed55f",
@@ -36,6 +39,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 03",
             inphone: "1234",
             email: "p@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed56f",
@@ -44,6 +48,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 04",
             inphone: "1234",
             email: "g@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed57f",
@@ -52,6 +57,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 05",
             inphone: "1234",
             email: "il@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed58f",
@@ -60,6 +66,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 06",
             inphone: "1234",
             email: "l@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed59f",
@@ -68,6 +75,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 07",
             inphone: "1234",
             email: "so@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed60f",
@@ -76,6 +84,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 08",
             inphone: "1234",
             email: "n@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed61f",
@@ -84,6 +93,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 09",
             inphone: "1234",
             email: "ta@example.com",
+            mobile: "8 (916) 000 00 00"
         },
         {
             id: "728ed62f",
@@ -92,6 +102,7 @@ async function getData(): Promise<Staff[]> {
             phone: "8 (916) 000 00 10",
             inphone: "1234",
             email: "f@example.com",
+            mobile: "8 (916) 000 00 00"
         },
     ]
 }
