@@ -1,6 +1,7 @@
 import { Staff, columns } from "./columns"
 import { DataTable } from "./data-table"
 import { NewSelect } from "./newselect"
+import SelectTable from "./selecttable"
 
 async function getData(): Promise<Staff[]> {
     // Fetch data from your API here.
@@ -112,7 +113,7 @@ export default async function AdminPage() {
 
     return (
         <div className=" grid grid-cols-[250px_minmax(900px,_1fr)] gap-2 justify-items-center">
-            <NewSelect />
+            <SelectTable />
             <DataTable columns={columns} data={data} />
         </div>
     )
