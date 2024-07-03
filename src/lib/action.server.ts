@@ -17,11 +17,11 @@ export const getSelectList = async () => {
     return dataSelect;
 };
 
+export const getAllTableData = async () => {
+    const data = await prisma.staff.findMany({
 
-
-
-export default async function getDataTable() {
-    const dataTable = await prisma.staff.findMany({
     });
-    return dataTable
-}
+
+    return data;
+};
+
