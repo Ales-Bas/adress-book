@@ -13,12 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Company {
-  id          String @id @default(cuid())
-  name        String
-  description String
-}
-
 model Account {
   id                String  @id @default(cuid())
   userId            String  @map("user_id")
@@ -74,4 +68,52 @@ model VerificationToken {
 enum ROLE {
   ADMIN
   USER
+}
+
+model Company {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+  depts       Dept[]
+
+  @@map("company")
+}
+
+model Dept {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @map("company_id")
+  otdels    Otdel[]
+
+  @@map("dept")
+}
+
+model Otdel {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+
+  dept   Dept    @relation(fields: [deptId], references: [id])
+  deptId String  @map("dept_id")
+  staffs Staff[]
+
+  @@map("otdel")
+}
+
+model Staff {
+  id      String @id @default(cuid())
+  name    String
+  post    String
+  phone   String
+  inphone String
+  email   String
+  mobile  String
+
+  otdel   Otdel  @relation(fields: [otdelId], references: [id])
+  otdelId String @map("otdel_id")
+
+  @@map("staff")
 }
