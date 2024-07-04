@@ -7,7 +7,7 @@ export default async function Admin() {
     const session = await getServerSession(nextAuthConfig);
 
     return (
-        <main className="flex min-h-screen container flex-col items-center justify-between pt-10">
+        <main className="flex min-h-screen flex-col items-center justify-between pt-10">
             {session ? (
 
                 <AdminPage />

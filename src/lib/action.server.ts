@@ -25,3 +25,13 @@ export const getAllTableData = async () => {
     return data;
 };
 
+export const getSelectTableData = async (id: any) => {
+    const data = await prisma.staff.findMany({
+        where: {
+            otdelId: id,
+        },
+    });
+
+    return data;
+};
+

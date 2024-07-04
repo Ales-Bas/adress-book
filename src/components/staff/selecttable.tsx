@@ -6,8 +6,9 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Button } from "../ui/button";
+import Link from "next/link";
+import { Separator } from "../ui/separator";
 
 
 export default function SelectTable({ data }: { data: any }) {
@@ -15,6 +16,7 @@ export default function SelectTable({ data }: { data: any }) {
 
     const [value, setValue] = useState<any>();
     const [valueDep, setValueDep] = useState<any>();
+    const [valueOtdel, setValueOtdel] = useState<any>();
     const [selectedOption, setSelectedOption] = useState<any>();
 
     const handleValueItems = (value: any) => {
@@ -28,8 +30,10 @@ export default function SelectTable({ data }: { data: any }) {
     };
 
     return (
-        <div>
-            <Button variant="ghost" className="text-base">Все организации</Button>
+        <div >
+            <div className="inline-flex items-center hover:bg-accent w-full h-10 ">
+                <Link href="/" className="justify-items-start text-base font-medium ">Все организации</Link>
+            </div>
             <Accordion type="single" value={value} onVolumeChange={handleValueItems}>
                 {data.map((company: any) => (
                     <AccordionItem key={company.id} value={company.id}>
@@ -40,17 +44,13 @@ export default function SelectTable({ data }: { data: any }) {
                                     <AccordionItem key={depts.id} value={depts.id}>
                                         <AccordionTrigger>{depts.name}</AccordionTrigger>
                                         <AccordionContent>
-                                            <Select onValueChange={handleValueChange}>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Отдел" />
-                                                </SelectTrigger>
-                                                <SelectContent position="popper" sideOffset={5}>
-                                                    {depts.otdels.map((otdels: any) => (
-                                                        <SelectItem key={otdels.id} value={otdels.id}>{otdels.name}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
+                                            <Accordion type="single" value={valueOtdel} onVolumeChange={setValueOtdel}>
+                                                {depts.otdels.map((otdels: any) => (
+                                                    <AccordionContent className="cursor-pointer hover:bg-accent">
+                                                        <Link href={`/${otdels.id}`}>{otdels.name}</Link>
+                                                    </AccordionContent>
+                                                ))}
+                                            </Accordion>
                                         </AccordionContent>
                                     </AccordionItem>
                                 ))}
@@ -59,7 +59,6 @@ export default function SelectTable({ data }: { data: any }) {
                     </AccordionItem>
                 ))}
             </Accordion>
-
         </div>
     );
 }
