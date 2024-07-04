@@ -46,7 +46,7 @@ export default function SelectTable({ data }: { data: any }) {
                                         <AccordionContent>
                                             <Accordion type="single" value={valueOtdel} onVolumeChange={setValueOtdel}>
                                                 {depts.otdels.map((otdels: any) => (
-                                                    <AccordionContent className="cursor-pointer hover:bg-accent">
+                                                    <AccordionContent key={otdels.id} className="cursor-pointer hover:bg-accent">
                                                         <Link href={`/${otdels.id}`}>{otdels.name}</Link>
                                                     </AccordionContent>
                                                 ))}
