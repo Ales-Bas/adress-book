@@ -11,7 +11,6 @@ import Link from "next/link";
 export default function SelectTable({ data }: { data: any }) {
 
     const [value, setValue] = useState<any>();
-    const [valueDep, setValueDep] = useState<any>();
     const [valueOtdel, setValueOtdel] = useState<any>();
     const [selectedOption, setSelectedOption] = useState<any>();
 
