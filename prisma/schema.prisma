@@ -74,21 +74,9 @@ model Company {
   id          String  @id @default(cuid())
   name        String  @unique
   description String?
-  depts       Dept[]
+  otdels      Otdel[]
 
   @@map("company")
-}
-
-model Dept {
-  id          String  @id @default(cuid())
-  name        String
-  description String?
-
-  company   Company @relation(fields: [companyId], references: [id])
-  companyId String  @map("company_id")
-  otdels    Otdel[]
-
-  @@map("dept")
 }
 
 model Otdel {
@@ -96,9 +84,9 @@ model Otdel {
   name        String
   description String?
 
-  dept   Dept    @relation(fields: [deptId], references: [id])
-  deptId String  @map("dept_id")
-  staffs Staff[]
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String  @map("company_id")
+  staffs    Staff[]
 
   @@map("otdel")
 }

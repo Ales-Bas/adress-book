@@ -1,21 +1,35 @@
-import SelectTable from "@/components/staff/selecttable";
+import { getAppSessionServer } from "@/app/utils/get-app-session.server";
 import AuthorizedGuard from "../../utils/authorized-guard"
-import { getSelectList } from "@/lib/action.server";
 
 export default async function Layout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const dataSelect = await getSelectList();
+
+    const session = await getAppSessionServer();
+
+    if (!session) {
+        return (
+            <>
+                <AuthorizedGuard>
+                    {children}
+                </AuthorizedGuard>
+            </>
+        )
+    }
+
+    if (session.user.role !== "ADMIN") {
+        return (
+            <div>
+                <p>Доступ запрещен. Пожалуйста, войдите как администратор.</p>
+            </div>
+        );
+    }
+
     return (
         <>
-            <AuthorizedGuard>
-                <div className=" grid grid-cols-[250px_minmax(900px,_1fr)] gap-2 justify-items-center container">
-                    <SelectTable data={dataSelect} />
-                    {children}
-                </div>
-            </AuthorizedGuard>
+            {children}
         </>
-    )
+    );
 }

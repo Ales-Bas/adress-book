@@ -6,13 +6,9 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useState } from "react";
-import { Button } from "../ui/button";
 import Link from "next/link";
-import { Separator } from "../ui/separator";
-
 
 export default function SelectTable({ data }: { data: any }) {
-
 
     const [value, setValue] = useState<any>();
     const [valueDep, setValueDep] = useState<any>();
@@ -39,20 +35,11 @@ export default function SelectTable({ data }: { data: any }) {
                     <AccordionItem key={company.id} value={company.id}>
                         <AccordionTrigger >{company.name}</AccordionTrigger>
                         <AccordionContent >
-                            <Accordion type="single" value={valueDep} onVolumeChange={setValueDep}>
-                                {company.depts.map((depts: any) => (
-                                    <AccordionItem key={depts.id} value={depts.id}>
-                                        <AccordionTrigger>{depts.name}</AccordionTrigger>
-                                        <AccordionContent>
-                                            <Accordion type="single" value={valueOtdel} onVolumeChange={setValueOtdel}>
-                                                {depts.otdels.map((otdels: any) => (
-                                                    <AccordionContent key={otdels.id} className="cursor-pointer hover:bg-accent">
-                                                        <Link href={`/${otdels.id}`}>{otdels.name}</Link>
-                                                    </AccordionContent>
-                                                ))}
-                                            </Accordion>
-                                        </AccordionContent>
-                                    </AccordionItem>
+                            <Accordion type="single" value={valueOtdel} onVolumeChange={setValueOtdel}>
+                                {company.otdels.map((otdels: any) => (
+                                    <AccordionContent key={otdels.id} className="cursor-pointer hover:bg-accent">
+                                        <Link href={`/${otdels.id}`}>{otdels.name}</Link>
+                                    </AccordionContent>
                                 ))}
                             </Accordion>
                         </AccordionContent>
