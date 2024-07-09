@@ -14,6 +14,7 @@ import {
 import { Role } from '@/service/user/type';
 import { createUser } from '@/lib/action.server';
 import { redirect } from 'next/navigation';
+import { Spinner } from '@/components/ui/spinner';
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -77,7 +78,7 @@ export default function AdminUserForm({ user }: UserFormProps) {
                     </SelectContent>
                 </Select>
                 <Input {...register('name')} placeholder="ФИО" />
-                <Button type="submit">Отправить</Button>
+                <Button disabled type="submit">Отправить</Button>
             </form>
         </div>
     );

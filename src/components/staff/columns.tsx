@@ -10,10 +10,12 @@ import Link from "next/link";
 export type Staff = {
     id: string
     name: string
+    company: string
+    otdel: string
     post: string
+    email: string
     phone: string
     inphone: string
-    email: string
     mobile: string
 }
 
@@ -33,8 +35,23 @@ export const columns: ColumnDef<Staff>[] = [
         },
     },
     {
+        accessorKey: "company",
+        header: "Юридическое лицо",
+    },
+    {
+        accessorKey: "otdel",
+        header: "Департамент",
+    },
+    {
         accessorKey: "post",
         header: "Должность",
+    },
+    {
+        accessorKey: "email",
+        header: "Почта",
+        cell: ({ cell, row }) => {
+            return <Link className="text-blue" href={`mailto:${row.original.email}`}>{row.original.email}</Link>
+        }
     },
     {
         accessorKey: "phone",
@@ -43,13 +60,6 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "inphone",
         header: "Внутренний телефон",
-    },
-    {
-        accessorKey: "email",
-        header: "Почта",
-        cell: ({ cell, row }) => {
-            return <Link className="text-blue" href={`mailto:${row.original.email}`}>{row.original.email}</Link>
-        }
     },
     {
         accessorKey: "mobile",

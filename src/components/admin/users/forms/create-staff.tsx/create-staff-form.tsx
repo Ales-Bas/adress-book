@@ -13,7 +13,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUser } from "@/lib/action.server";
+import { createUser, updateUser } from "@/lib/action.server";
+import { Role } from "@/service/user/type";
 
 const FormSchema = z.object({
     email: z
@@ -29,15 +30,35 @@ const FormSchema = z.object({
     }),
 })
 
-export function StaffForm() {
+type UserFormProps = {
+    /*onSuccess?: () => void;*/
+    user?: {
+        id: string,
+        email: string,
+        role: Role,
+        name: string
+    };
+};
+
+export function StaffForm({ user }: any) {
     const form = useForm<z.infer<typeof FormSchema>>({
+        defaultValues: user
+            ? {
+                email: user.email,
+                role: user.role,
+                name: user.name,
+            }
+            : undefined,
         resolver: zodResolver(FormSchema),
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-
-        await createUser(data);
-        console.log(data);
+        if (user) {
+            const userid = user.id;
+            await updateUser(userid, data);
+        } else {
+            await createUser(data);
+        }
     }
 
 

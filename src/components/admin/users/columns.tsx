@@ -1,8 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, SquarePen, Trash } from "lucide-react";
+import { ArrowUpDown, SquarePen } from "lucide-react";
 import Link from "next/link";
+import { DeleteUserButton } from "./forms/delete-button";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -16,11 +17,6 @@ export type Users = {
 
 
 export const columns: ColumnDef<Users>[] = [
-
-    {
-        accessorKey: "id",
-        header: "id",
-    },
     {
         accessorKey: "name",
         header: ({ column }) => {
@@ -50,9 +46,9 @@ export const columns: ColumnDef<Users>[] = [
         accessorKey: "id",
         header: "Действие",
         cell: ({ cell, row }) => {
-            return <div>
+            return <div className="flex">
                 <Button variant="ghost"><Link href={`/admin/users/${row.original.id}`}><SquarePen className=" h-5 w-5" /></Link></Button>
-                <Button variant="ghost" ><Trash className=" h-5 w-5" /></Button>
+                <DeleteUserButton id={row.original.id} />
             </div>
         }
     }

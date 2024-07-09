@@ -97,6 +97,7 @@ export function DataTable<TData, TValue>({
             </div>
 
             <Table id="table">
+                <h1>Заголовок таблицы</h1>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>

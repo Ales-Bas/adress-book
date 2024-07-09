@@ -8,7 +8,7 @@ export default async function Layout({
     children: React.ReactNode;
 }) {
     const dataSelect = await getSelectList();
-    console.log(dataSelect)
+
     return (
         <>
             <AuthorizedGuard>

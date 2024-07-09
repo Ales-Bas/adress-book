@@ -29,7 +29,7 @@ export default function SelectTable({ data }: { data: any }) {
             <div className="inline-flex items-center hover:bg-accent w-full h-10 ">
                 <Link href="/" className="justify-items-start text-base font-medium ">Все организации</Link>
             </div>
-            <Accordion type="single" value={value} onVolumeChange={handleValueItems}>
+            <Accordion type="single" collapsible value={value} onVolumeChange={handleValueItems}>
                 {data.map((company: any) => (
                     <AccordionItem key={company.id} value={company.id}>
                         <AccordionTrigger >{company.name}</AccordionTrigger>

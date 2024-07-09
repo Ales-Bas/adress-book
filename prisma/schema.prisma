@@ -94,10 +94,12 @@ model Otdel {
 model Staff {
   id      String @id @default(cuid())
   name    String
+  company String
+  dept    String
   post    String
+  email   String
   phone   String
   inphone String
-  email   String
   mobile  String
 
   otdel   Otdel  @relation(fields: [otdelId], references: [id])

@@ -1,7 +1,16 @@
+import { StaffForm } from "@/components/admin/users/forms/create-staff.tsx/create-staff-form";
+import { getUserId } from "@/lib/action.server";
 
-export default function AdminUsersPage() {
+export default async function AdminEditUserPage({ params }: { params: { id: string } }) {
+    const id = params.id;
+    const user = await getUserId(id);
+
+    if (!user) {
+        <div>Ошибка получения пользователя</div>
+    }
+
     return (
-        <h1>Страница редактирования</h1>
+        <StaffForm user={user} />
 
     )
 }
