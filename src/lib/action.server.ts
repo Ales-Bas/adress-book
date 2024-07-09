@@ -156,7 +156,7 @@ export const getAllStaff = async () => {
 
     return data;
 };
-/*
+
 export const getSelectStaff = async (id: any) => {
     const data = await prisma.staff.findMany({
         where: {
@@ -165,5 +165,5 @@ export const getSelectStaff = async (id: any) => {
     });
 
     return data;
-};*/
+};
 
