@@ -1,4 +1,4 @@
-import { StaffForm } from "@/components/admin/users/forms/create-staff.tsx/create-staff-form";
+import { StaffForm } from "@/components/admin/users/forms/create-user-form";
 import { getUserId } from "@/lib/action.server";
 
 export default async function AdminEditUserPage({ params }: { params: { id: string } }) {

@@ -10,7 +10,6 @@ import Link from "next/link";
 export type Staff = {
     id: string
     name: string
-    company: string
     dept: string
     post: string
     email: string
@@ -33,10 +32,6 @@ export const columns: ColumnDef<Staff>[] = [
                 </Button>
             )
         },
-    },
-    {
-        accessorKey: "company",
-        header: "Юридическое лицо",
     },
     {
         accessorKey: "dept",

@@ -26,7 +26,7 @@ const FormSchema = z.object({
         }),
     role: z.union([z.literal('ADMIN'), z.literal('USER')]),
     name: z.string({
-        required_error: "Введите адресс электронной почты",
+        required_error: "Введите ФИО",
     }),
 })
 

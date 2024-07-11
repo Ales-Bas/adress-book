@@ -1,8 +1,9 @@
 
 
-
 export default async function AdminPage() {
 
 
-    return <div>Страница администратора</div>;
+    return <div>
+        <div className="flex justify-center mt-4 align-center">Страница администратора</div>
+    </div>;
 }

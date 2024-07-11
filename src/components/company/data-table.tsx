@@ -24,9 +24,10 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { Printer } from "lucide-react"
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue, Ttitle> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    titleTable: string
 }
 
 interface TableElement extends HTMLElement {
@@ -54,10 +55,11 @@ function printTable(tableElement: TableElement): void {
     }
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData, TValue, Ttitle>({
+    titleTable,
     columns,
     data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue, Ttitle>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -75,10 +77,11 @@ export function DataTable<TData, TValue>({
             columnFilters,
         },
     })
+    const title = { titleTable }
 
     return (
         <div className="rounded-md border">
-            <h1 className="flex items-center justify-center font-bold text-2xl ml-2 py-4">Общий список сотрудников </h1>
+            <h1 className="flex items-center justify-center font-bold text-2xl ml-2 py-4">Список сотрудников {title.titleTable}</h1>
             <div className="flex items-center justify-between ml-2 py-4">
                 <Input
                     placeholder="Поиск по ФИО..."

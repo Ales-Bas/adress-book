@@ -1,5 +1,6 @@
 import { getAppSessionServer } from "@/app/utils/get-app-session.server";
 import AuthorizedGuard from "../../utils/authorized-guard"
+import { AdminNav } from "@/components/admin/ui/menu-nav";
 
 export default async function Layout({
     children,
@@ -29,6 +30,7 @@ export default async function Layout({
 
     return (
         <>
+            <AdminNav />
             {children}
         </>
     );

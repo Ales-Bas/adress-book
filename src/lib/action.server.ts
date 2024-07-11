@@ -133,6 +133,26 @@ export const deleteUser = async (id: string) => {
     }
 }
 
+export const getDataCompanyList = async () => {
+    const session = await getAppSessionServer();
+
+    if (!session || session.user.role !== "ADMIN") {
+        return [];
+    }
+
+    const data = await prisma.company.findMany({
+        select: {
+            id: true,
+            name: true,
+        },
+        orderBy: {
+            name: 'asc'
+        },
+    });
+
+    return data;
+};
+
 export const getSelectList = async () => {
     const dataSelect = await prisma.company.findMany({
         include: {
@@ -157,13 +177,47 @@ export const getAllStaff = async () => {
     return data;
 };
 
-export const getSelectStaff = async (id: any) => {
-    const data = await prisma.staff.findMany({
-        where: {
-            otdelId: id,
-        },
-    });
+export const getSelectOtdelStaff = async (id: any) => {
+    try {
+        const session = await getAppSessionServer();
 
-    return data;
+        if (!session) {
+            throw new Error("Доступ запрещен!")
+        }
+        const data = await prisma.staff.findMany({
+            where: {
+                otdelId: id,
+            },
+        });
+
+        return data;
+    } catch (error) {
+        return { message: ` Ошибка базы данных: ${error}` }
+    }
+};
+
+export const getSelectCompanyStaff = async (id: any) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session) {
+            throw new Error("Доступ запрещен!")
+        }
+
+        const data = await prisma.otdel.findMany({
+            where: {
+                companyId: id,
+
+            },
+            include: {
+                staffs: true,
+            }
+
+        });
+        return data;
+
+    } catch (error) {
+        return { message: ` Ошибка базы данных: ${error}` }
+    }
 };
 

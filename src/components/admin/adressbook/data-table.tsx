@@ -20,38 +20,15 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import React from "react"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
-import { Printer } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { PlusIcon } from "lucide-react"
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-}
-
-interface TableElement extends HTMLElement {
-    outerHTML: string;
-}
-
-function printTable(tableElement: TableElement): void {
-    const windowPrint = window.open('', '_blank');
-    if (!windowPrint) return;
-
-    windowPrint.document.write('<html><head><title>Print</title>');
-    windowPrint.document.write('<style>');
-    windowPrint.document.write('svg { display: none;} thead, tr {height: 30px}; td {padding-left: 5px; text-align: center;}');
-    windowPrint.document.write('button { border: none; background: white;} a {text-decoration: none; color: black;}');
-    windowPrint.document.write('</style>');
-    windowPrint.document.write('</head><body>');
-    windowPrint.document.write(tableElement.outerHTML);
-    windowPrint.document.write('</body></html>');
-    windowPrint.document.close();
-
-    try {
-        windowPrint.print();
-    } catch (error) {
-        console.error("Printing failed:", error);
-    }
 }
 
 export function DataTable<TData, TValue>({
@@ -77,7 +54,7 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div className="rounded-md border">
+        <div className="rounded-md">
             <h1 className="flex items-center justify-center font-bold text-2xl ml-2 py-4">Общий список сотрудников </h1>
             <div className="flex items-center justify-between ml-2 py-4">
                 <Input
@@ -104,13 +81,7 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm mr-1"
                 />
-                <Button
-                    variant="ghost"
-                    className="mr-2"
-                    onClick={() => printTable(document.querySelector('#table') as HTMLTableElement)}
-                >
-                    <Printer />
-                </Button>
+                <Button variant="outline" className="mr-2 ml-2"><Link href="/admin/adressbook/new">Добавить запись</Link> <PlusIcon className="h-5 md:ml-4" /></Button>
             </div>
             <Table id="table">
                 <TableHeader>
