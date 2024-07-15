@@ -9,8 +9,9 @@ export function Layout({
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container flex h-14 items-center">
-                <div className="mr-4">{logo}</div>
-                <div className="flex flex-1 items-center justify-end space-x-3 ">
+                <div className="mr-4 flex justify-between">{logo}</div>
+                <span className="flex flex-1 justify-center font-bold inline-block mt-2">Адресная книга</span>
+                <div className="flex items-center justify-end space-x-3 ">
                     {logout}
                 </div>
             </div>

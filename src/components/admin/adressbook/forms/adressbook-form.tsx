@@ -6,15 +6,16 @@ import {
     FormItem,
     FormLabel,
 } from "@/components/ui/form";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/spinner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUser, getDataCompanyList, updateUser } from "@/lib/action.server";
-import React from "react";
+import { createStaffAdressbook, getDataCompanyList, getDataOtdelsList, updateUser } from "@/lib/action.server";
+import { useEffect, useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
+
 
 const FormSchema = z.object({
     name: z.string({
@@ -33,7 +34,7 @@ const FormSchema = z.object({
     phone: z.string({ required_error: "Введите внешний номер телефона" }),
     inphone: z.string({ required_error: "Введите внутренний номер телефона" }),
     mobile: z.string({ required_error: "Введите личный номер телефона" }),
-    otdel: z.string({ required_error: "Поле должно быть заполнено" }),
+    otdelId: z.string({ required_error: "Поле должно быть заполнено" }),
 })
 
 type AdressbookFormProps = {
@@ -48,11 +49,21 @@ type AdressbookFormProps = {
         phone: string,
         inphone: string,
         mobile: string,
-        otdel: string,
+        otdelId: string,
     };
 };
 
-export async function AdressbookForm({ staff }: any) {
+type ICompanyList = {
+    id: string;
+    name: string;
+};
+
+type IOtdelList = {
+    id: string;
+    name: string;
+};
+
+export function AdressbookForm({ staff }: any) {
     const form = useForm<z.infer<typeof FormSchema>>({
         defaultValues: staff
             ? {
@@ -64,24 +75,55 @@ export async function AdressbookForm({ staff }: any) {
                 phone: staff.phone,
                 inphone: staff.inphone,
                 mobile: staff.mobile,
-                otdel: staff.otdel
-
-
+                otdelId: staff.otdelId
             }
             : undefined,
         resolver: zodResolver(FormSchema),
     })
+    const { setValue, watch, formState: { isSubmitting } } = form;
+    const [listCompany, setListCompany] = useState<ICompanyList[]>([]);
+    const [listOtdels, setListOtdels] = useState<IOtdelList[]>([]);
+    const [selectedCompanyId, setSelectedCompanyId] = useState('');
+    let watchCompany = watch('company');
+
+    useEffect(() => {
+        async function getCompanyList() {
+            const response = await getDataCompanyList();
+            setListCompany(response);
+        }
+        getCompanyList();
+    }, []);
+
+    useEffect(() => {
+        async function getOtdelsList() {
+            const res = await getDataOtdelsList(selectedCompanyId);
+            setListOtdels(res);
+        }
+        if (watchCompany) {
+            getOtdelsList();
+            console.log(listOtdels)
+        }
+    }, [watchCompany]);
+
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         if (staff) {
             const staffid = staff.id;
             await updateUser(staffid, data);
         } else {
-            console.log(data)
-            /*await createUser(data);*/
+            await createStaffAdressbook(data)
         }
     }
 
+    const handleSelectChangeOtdel = (selectedItem: any) => {
+        setValue("dept", selectedItem.name);
+        setValue("otdelId", selectedItem.id);
+    };
+
+    const handleSelectChangeCompany = (selectedItemC: any) => {
+        setValue("company", selectedItemC.name);
+        setSelectedCompanyId(selectedItemC.id)
+    };
 
     return (
         <Form {...form}>
@@ -106,6 +148,56 @@ export async function AdressbookForm({ staff }: any) {
                             </FormItem>
                         )}
                     />
+                    <div className="mt-3">
+                        <Select onValueChange={
+                            (selectedItemCId) => {
+                                // Находим объект item по id в списке компаний
+                                const selectedItemC = listCompany.find(company => company.id === selectedItemCId);
+                                // Обработка выбранного элемента
+                                handleSelectChangeCompany(selectedItemC);
+                            }
+                        }
+                        >
+                            <FormControl >
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Выберите организацию" />
+                                </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                                {listCompany.map((item) => (
+                                    <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <FormField
+                        control={form.control}
+                        name="otdelId"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Департамент</FormLabel>
+                                <Select onValueChange={
+                                    (selectedItemId) => {
+                                        // Находим объект item по id в списке компаний
+                                        const selectedItem = listOtdels.find(otdel => otdel.id === selectedItemId);
+                                        // Обработка выбранного элемента
+                                        handleSelectChangeOtdel(selectedItem);
+                                    }
+                                } defaultValue={field.value} value={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Выберите департамент" defaultValue={field.value} />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {listOtdels.map((item) => (
+                                            <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </FormItem>
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name="post"
@@ -125,6 +217,7 @@ export async function AdressbookForm({ staff }: any) {
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="email"
@@ -145,6 +238,7 @@ export async function AdressbookForm({ staff }: any) {
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="phone"
@@ -183,6 +277,7 @@ export async function AdressbookForm({ staff }: any) {
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
                         name="mobile"
@@ -202,8 +297,47 @@ export async function AdressbookForm({ staff }: any) {
                             </FormItem>
                         )}
                     />
-                    <Button>
-                        Добавить
+                    <FormField
+                        control={form.control}
+                        name="company"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Организация</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        disabled
+                                        placeholder="Заполняется автоматически"
+                                        type="text"
+                                        autoCapitalize="none"
+                                        autoComplete="name"
+                                        autoCorrect="off"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="dept"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Департамент</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        disabled
+                                        placeholder="Заполняется автоматически"
+                                        type="text"
+                                        autoCapitalize="none"
+                                        autoCorrect="off"
+                                        {...field}
+                                    />
+                                </FormControl>
+                            </FormItem>
+                        )}
+                    />
+                    <Button disabled={isSubmitting}>
+                        {isSubmitting ? <Spinner /> : "Добавить"}
                     </Button>
                 </div>
             </form>

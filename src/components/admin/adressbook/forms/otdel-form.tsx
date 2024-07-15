@@ -6,64 +6,72 @@ import {
     FormItem,
     FormLabel,
 } from "@/components/ui/form";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/spinner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUser, updateUser } from "@/lib/action.server";
-import { Role } from "@/service/user/type";
+import { createOtdel, getDataCompanyList, updateOtdel } from "@/lib/action.server";
+import { useEffect, useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
+
 
 const FormSchema = z.object({
-    email: z
-        .string({
-            required_error: "Введите адресс электронной почты",
-        })
-        .email({
-            message: "Пожалуйста введите корректный email",
-        }),
-    role: z.union([z.literal('ADMIN'), z.literal('USER')]),
     name: z.string({
-        required_error: "Введите ФИО",
+        required_error: "Введите ФИО сотрудика",
     }),
+    companyId: z.string({ required_error: "Поле должно быть заполнено" }),
 })
 
-type UserFormProps = {
+type AdressbookFormProps = {
     /*onSuccess?: () => void;*/
-    user?: {
+    otdels?: {
         id: string,
-        email: string,
-        role: Role,
-        name: string
+        name: string,
+        companyId: string,
     };
 };
 
-export function StaffForm({ user }: any) {
+type ICompanyList = {
+    id: string;
+    name: string;
+};
+
+type IOtdelList = {
+    id: string;
+    name: string;
+};
+
+export function OtdelForm({ otdels }: any) {
     const form = useForm<z.infer<typeof FormSchema>>({
-        defaultValues: user
+        defaultValues: otdels
             ? {
-                email: user.email,
-                role: user.role,
-                name: user.name,
+                name: otdels.name,
+                companyId: otdels.companyId
             }
             : undefined,
         resolver: zodResolver(FormSchema),
     })
-
     const { formState: { isSubmitting } } = form;
+    const [listCompany, setListCompany] = useState<ICompanyList[]>([]);
+
+    useEffect(() => {
+        async function getCompanyList() {
+            const response = await getDataCompanyList();
+            setListCompany(response);
+        }
+        getCompanyList();
+    }, []);
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        if (user) {
-            const userid = user.id;
-            await updateUser(userid, data);
+        if (otdels) {
+            const otdelid = otdels.id;
+            await updateOtdel(otdelid, data);
         } else {
-            await createUser(data);
+            await createOtdel(data)
         }
     }
-
-
 
     return (
         <Form {...form}>
@@ -71,39 +79,20 @@ export function StaffForm({ user }: any) {
                 <div className="grid gap-6">
                     <FormField
                         control={form.control}
-                        name="email"
+                        name="companyId"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="name@example.com"
-                                        type="email"
-                                        autoCapitalize="none"
-                                        autoComplete="email"
-                                        autoCorrect="off"
-
-                                        {...field}
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="role"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Роль</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <FormLabel>Организация</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                     <FormControl>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Установите роль пользователя" />
+                                            <SelectValue placeholder="Выберите организацию" defaultValue={field.value} />
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        <SelectItem value="ADMIN">Админ</SelectItem>
-                                        <SelectItem value="USER">Пользователь</SelectItem>
+                                        {listCompany.map((item) => (
+                                            <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </FormItem>
@@ -114,10 +103,10 @@ export function StaffForm({ user }: any) {
                         name="name"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>ФИО</FormLabel>
+                                <FormLabel>Название департамента</FormLabel>
                                 <FormControl>
                                     <Input
-                                        placeholder="Фамилия Имя Отчество"
+                                        placeholder="Введите название отдела"
                                         type="text"
                                         autoCapitalize="none"
                                         autoComplete="name"
@@ -128,6 +117,7 @@ export function StaffForm({ user }: any) {
                             </FormItem>
                         )}
                     />
+
                     <Button disabled={isSubmitting}>
                         {isSubmitting ? <Spinner /> : "Добавить"}
                     </Button>
