@@ -25,16 +25,14 @@ const FormSchema = z.object({
     dept: z.string({ required_error: "Выберите отдел или депортамен" }),
     post: z.string({ required_error: "Введите должность" }),
     email: z
-        .string({
-            required_error: "Введите адресс электронной почты",
-        })
+        .string()
         .email({
             message: "Пожалуйста введите корректный email",
         }),
-    phone: z.string({ required_error: "Введите внешний номер телефона" }),
-    inphone: z.string({ required_error: "Введите внутренний номер телефона" }),
-    mobile: z.string({ required_error: "Введите личный номер телефона" }),
-    otdelId: z.string({ required_error: "Поле должно быть заполнено" }),
+    phone: z.string(),
+    inphone: z.string(),
+    mobile: z.string(),
+    otdelId: z.string(),
 })
 
 type AdressbookFormProps = {
