@@ -24,14 +24,10 @@ const FormSchema = z.object({
     company: z.string({ required_error: "Выберите организацию" }),
     dept: z.string({ required_error: "Выберите отдел или депортамен" }),
     post: z.string({ required_error: "Введите должность" }),
-    email: z
-        .string()
-        .email({
-            message: "Пожалуйста введите корректный email",
-        }),
-    phone: z.string(),
-    inphone: z.string(),
-    mobile: z.string(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    inphone: z.string().optional(),
+    mobile: z.string().optional(),
     otdelId: z.string(),
 })
 
@@ -75,7 +71,17 @@ export function AdressbookForm({ staff }: any) {
                 mobile: staff.mobile,
                 otdelId: staff.otdelId
             }
-            : undefined,
+            : {
+                name: "",
+                company: "",
+                dept: "",
+                post: "",
+                email: "",
+                phone: "",
+                inphone: "",
+                mobile: "",
+                otdelId: "",
+            },
         resolver: zodResolver(FormSchema),
     })
     const { setValue, watch, formState: { isSubmitting } } = form;
@@ -99,7 +105,6 @@ export function AdressbookForm({ staff }: any) {
         }
         if (watchCompany) {
             getOtdelsList();
-            console.log(listOtdels)
         }
     }, [watchCompany]);
 
@@ -225,9 +230,8 @@ export function AdressbookForm({ staff }: any) {
                                 <FormControl>
                                     <Input
                                         placeholder="name@example.com"
-                                        type="email"
+                                        type="text"
                                         autoCapitalize="none"
-                                        autoComplete="email"
                                         autoCorrect="off"
 
                                         {...field}
