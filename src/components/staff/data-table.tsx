@@ -39,8 +39,9 @@ function printTable(tableElement: TableElement): void {
 
     windowPrint.document.write('<html><head><title>Print</title>');
     windowPrint.document.write('<style>');
+    windowPrint.document.write('body {font-family: Arial, sans-serif;} input { display: none;} .printnone {display: none;} .printlogo {display: flex; flex-direction: column;} .title {text-align: center;}');
     windowPrint.document.write('svg { display: none;} thead, tr {height: 30px}; td {padding-left: 5px; text-align: center;}');
-    windowPrint.document.write('button { border: none; background: white;} a {text-decoration: none; color: black;}');
+    windowPrint.document.write('button { border: none; background: white; font-weight: 700; font-size: 16px;} a {text-decoration: none; color: black;}');
     windowPrint.document.write('</style>');
     windowPrint.document.write('</head><body>');
     windowPrint.document.write(tableElement.outerHTML);
@@ -77,8 +78,8 @@ export function DataTable<TData, TValue>({
     })
 
     return (
-        <div className="rounded-md border">
-            <h1 className="flex items-center justify-center font-bold text-2xl ml-2 py-4">Общий список сотрудников </h1>
+        <div className="rounded-md border w-full  mx-auto overflow-x-auto">
+            <h1 className="title flex items-center justify-center font-bold text-2xl ml-2 py-4">Общий список сотрудников </h1>
             <div className="flex items-center justify-between ml-2 py-4">
                 <Input
                     placeholder="Поиск по ФИО..."
@@ -107,7 +108,7 @@ export function DataTable<TData, TValue>({
                 <Button
                     variant="ghost"
                     className="mr-2"
-                    onClick={() => printTable(document.querySelector('#table') as HTMLTableElement)}
+                    onClick={() => printTable(document.querySelector('#printpage') as HTMLTableElement)}
                 >
                     <Printer />
                 </Button>

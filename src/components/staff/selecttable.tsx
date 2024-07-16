@@ -27,7 +27,7 @@ export default function SelectTable({ data }: { data: any }) {
     };
 
     return (
-        <div >
+        <div className="printnone">
             <div className="inline-flex items-center hover:bg-accent w-full h-10 rounded-md">
                 <Link href="/" className="justify-items-start text-base font-medium ">Все организации</Link>
             </div>

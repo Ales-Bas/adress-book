@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={cn(
+      <body id="printpage" className={cn(
         "min-h-screen bg-background font-sans antialiased",
         fontSans.variable
       )}>

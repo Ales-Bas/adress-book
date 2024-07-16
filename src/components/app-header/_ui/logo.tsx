@@ -5,7 +5,7 @@ export function Logo() {
     return (
         < >
             <Link className="flex items-center space-x-2 " href="/">
-                <div className="flex flex-col justify-center items-center mt-1">
+                <div className="printlogo flex flex-col justify-center items-center mt-1">
                     <Image
                         src="/attachment.jpeg"
                         width={200}

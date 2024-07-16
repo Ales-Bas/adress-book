@@ -5,8 +5,10 @@ import Link from "next/link";
 
 export default function AdminLinkButton() {
     return (
-        <Button variant={"outline"} className="mr-2">
-            <Link href="/admin"><UserCog className=" h-4 w-4" /></Link>
-        </Button>
+        <Link href="/admin">
+            <Button variant={"outline"} className="mr-2">
+                <UserCog className=" h-4 w-4" />
+            </Button>
+        </Link>
     )
 }
