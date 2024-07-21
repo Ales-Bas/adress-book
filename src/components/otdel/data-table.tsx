@@ -23,6 +23,7 @@ import React from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { Printer } from "lucide-react"
+import LoadExcelButton from "../downloadExelBtn"
 
 interface DataTableProps<TData, TValue, Ttitle> {
     columns: ColumnDef<TData, TValue>[]
@@ -115,6 +116,7 @@ export function DataTable<TData, TValue, Ttitle>({
                 >
                     <Printer />
                 </Button>
+                <LoadExcelButton data={data} fileName={title.titleTable} />
             </div>
             <Table id="table">
                 <TableHeader>

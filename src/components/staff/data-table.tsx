@@ -23,10 +23,12 @@ import React from "react"
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { Printer } from "lucide-react"
+import LoadExcelButton from "../downloadExelBtn"
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue, Ttitle> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    titleTable: string
 }
 
 interface TableElement extends HTMLElement {
@@ -55,10 +57,13 @@ function printTable(tableElement: TableElement): void {
     }
 }
 
-export function DataTable<TData, TValue>({
+
+
+export function DataTable<TData, TValue, Ttitle>({
     columns,
     data,
-}: DataTableProps<TData, TValue>) {
+    titleTable
+}: DataTableProps<TData, TValue, Ttitle>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -77,9 +82,11 @@ export function DataTable<TData, TValue>({
         },
     })
 
+    const title = { titleTable }
+
     return (
         <div className="rounded-md border w-full  mx-auto overflow-x-auto">
-            <h1 className="title flex items-center justify-center font-bold text-2xl ml-2 py-4">Общий список сотрудников </h1>
+            <h1 className="title flex items-center justify-center font-bold text-2xl ml-2 py-4">{titleTable}</h1>
             <div className="flex items-center justify-between ml-2 py-4">
                 <Input
                     placeholder="Поиск по ФИО..."
@@ -112,6 +119,7 @@ export function DataTable<TData, TValue>({
                 >
                     <Printer />
                 </Button>
+                <LoadExcelButton data={data} fileName={title.titleTable} />
             </div>
             <Table id="table">
                 <TableHeader>
