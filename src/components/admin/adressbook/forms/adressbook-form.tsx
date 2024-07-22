@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createStaffAdressbook, getDataCompanyList, getDataOtdelsList, updateUser } from "@/lib/action.server";
+import { createStaffAdressbook, getDataCompanyList, getDataOtdelsList, updateStaffAdressbook } from "@/lib/action.server";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 
@@ -112,7 +112,7 @@ export function AdressbookForm({ staff }: any) {
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         if (staff) {
             const staffid = staff.id;
-            await updateUser(staffid, data);
+            await updateStaffAdressbook(staffid, data);
         } else {
             await createStaffAdressbook(data)
         }

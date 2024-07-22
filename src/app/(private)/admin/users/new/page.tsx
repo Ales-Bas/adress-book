@@ -1,4 +1,4 @@
-import { StaffForm } from "@/components/admin/users/forms/create-user-form";
+import { UserForm } from "@/components/admin/users/forms/create-user-form";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { Suspense } from "react";
@@ -14,11 +14,10 @@ export default function AdminUsersPage() {
                 </CardHeader>
                 <CardContent className="grid gap-6">
                     <Suspense fallback={<Spinner />}>
-                        <StaffForm />
+                        <UserForm />
                     </Suspense>
                 </CardContent>
             </Card>
         </div>
-
     )
 }

@@ -71,7 +71,7 @@ export const columns: ColumnDef<Staff>[] = [
         header: "Действие",
         cell: ({ cell, row }) => {
             return <div className="flex">
-                <Button variant="ghost"><Link href={`/admin/users/${row.original.id}`}><SquarePen className=" h-5 w-5" /></Link></Button>
+                <Button variant="ghost"><Link href={`/admin/adressbook/${row.original.id}`}><SquarePen className=" h-5 w-5" /></Link></Button>
                 <DeleteStaffButton id={row.original.id} />
             </div>
         }

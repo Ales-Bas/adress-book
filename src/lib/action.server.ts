@@ -218,6 +218,49 @@ export const createStaffAdressbook = async ({
     redirect('/admin/adressbook');
 };
 
+export const updateStaffAdressbook = async (staffid: any, {
+    name,
+    company,
+    dept,
+    post,
+    email,
+    phone,
+    inphone,
+    mobile,
+    otdelId,
+}: any): Promise<any> => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        const data = await prisma.staff.update({
+            where: {
+                id: staffid,
+            },
+            data: {
+                name,
+                company,
+                dept,
+                post,
+                email,
+                phone,
+                inphone,
+                mobile,
+                otdelId,
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        return { message: error };
+    }
+    revalidatePath('/admin/adressbook');
+    redirect('/admin/adressbook');
+};
+
 export const deleteStaffAdressbook = async (id: string) => {
     try {
         const session = await getAppSessionServer();
@@ -240,15 +283,56 @@ export const deleteStaffAdressbook = async (id: string) => {
 }
 
 export const getAllStaff = async () => {
-    const data = await prisma.staff.findMany({
-        orderBy: {
-            name: 'asc'
-        },
+    try {
+        const session = await getAppSessionServer();
 
-    });
+        if (!session) {
+            throw new Error("Доступ запрещен!")
+        }
+        const data = await prisma.staff.findMany({
+            orderBy: {
+                name: 'asc'
+            },
 
-    return data;
+        });
+
+        return data;
+    } catch (error) {
+        return { message: ` Ошибка базы данных: ${error}` }
+    }
 };
+
+export const getStaffId = async (id: string) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        let getUser = await prisma.staff.findUnique({
+            where: {
+                id: id,
+            },
+            select: {
+                id: true,
+                name: true,
+                company: true,
+                dept: true,
+                post: true,
+                email: true,
+                phone: true,
+                inphone: true,
+                mobile: true,
+                otdelId: true
+            },
+        })
+        return getUser;
+
+    } catch (error) {
+        return undefined
+    }
+}
 
 export const getSelectOtdelStaff = async (id: any) => {
     try {
@@ -270,16 +354,25 @@ export const getSelectOtdelStaff = async (id: any) => {
 };
 
 export const getSelectList = async () => {
-    const dataSelect = await prisma.company.findMany({
-        include: {
-            otdels: true,
-        },
-        orderBy: {
-            name: 'asc'
-        },
-    });
+    try {
+        const session = await getAppSessionServer();
 
-    return dataSelect;
+        if (!session) {
+            throw new Error("Доступ запрещен!")
+        }
+        const dataSelect = await prisma.company.findMany({
+            include: {
+                otdels: true,
+            },
+            orderBy: {
+                name: 'asc'
+            },
+        });
+
+        return dataSelect;
+    } catch (error) {
+        return { message: ` Ошибка базы данных: ${error}` }
+    }
 };
 
 export const getSelectCompanyStaff = async (id: any) => {
@@ -326,6 +419,30 @@ export const getAllCompany = async () => {
     }
 };
 
+export const getCompanyById = async (id: string) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        let getCompany = await prisma.company.findUnique({
+            where: {
+                id: id,
+            },
+            select: {
+                id: true,
+                name: true,
+            },
+        })
+        return getCompany;
+
+    } catch (error) {
+        return undefined
+    }
+}
+
 export const createCompany = async ({
     name,
 }: any): Promise<any> => {
@@ -341,11 +458,12 @@ export const createCompany = async ({
                 name,
             }
         });
-        revalidatePath('/admin/adressbook/new');
     } catch (error) {
         console.error(error);
         return { message: error };
     }
+    revalidatePath('/admin');
+    redirect('/admin');
 };
 
 export const updateCompany = async (companyid: any, {
@@ -366,12 +484,37 @@ export const updateCompany = async (companyid: any, {
                 name,
             }
         });
-        revalidatePath('/admin/adressbook/new');
     } catch (error) {
         console.error(error);
         return { message: error };
     }
+    revalidatePath('/admin');
+    redirect('/admin');
 };
+
+export const getOtdelById = async (id: string) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        let getOtdel = await prisma.otdel.findUnique({
+            where: {
+                id: id,
+            },
+            select: {
+                id: true,
+                name: true,
+            },
+        })
+        return getOtdel;
+
+    } catch (error) {
+        return undefined
+    }
+}
 
 export const createOtdel = async ({
     name,
@@ -390,11 +533,12 @@ export const createOtdel = async ({
                 companyId
             }
         });
-        revalidatePath('/admin/adressbook/new');
     } catch (error) {
         console.error(error);
         return { message: error };
     }
+    revalidatePath(`/admin/otdels/${companyId}`);
+    redirect(`/admin/otdels/${companyId}`);
 };
 
 export const updateOtdel = async (otdelid: any, {
@@ -417,9 +561,10 @@ export const updateOtdel = async (otdelid: any, {
                 companyId
             }
         });
-        revalidatePath('/admin/adressbook/new');
     } catch (error) {
         console.error(error);
         return { message: error };
     }
+    revalidatePath(`/admin/otdels/${companyId}`);
+    redirect(`/admin/otdels/${companyId}`);
 };

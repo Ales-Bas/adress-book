@@ -40,7 +40,7 @@ type UserFormProps = {
     };
 };
 
-export function StaffForm({ user }: any) {
+export function UserForm({ user }: any) {
     const form = useForm<z.infer<typeof FormSchema>>({
         defaultValues: user
             ? {

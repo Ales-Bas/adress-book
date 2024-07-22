@@ -16,4 +16,5 @@ export default async function TableSelectPage({ params }: any) {
             <DataTable columns={columns} data={data} titleTable={title} />
         )
     }
+
 }
