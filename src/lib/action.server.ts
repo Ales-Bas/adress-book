@@ -5,6 +5,7 @@ import { getAppSessionServer } from "@/app/utils/get-app-session.server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
+
 export const getAllUsers = async () => {
     const session = await getAppSessionServer();
 
@@ -252,6 +253,37 @@ export const updateStaffAdressbook = async (staffid: any, {
                 otdelId,
             }
         });
+
+    } catch (error) {
+        console.error(error);
+        return { message: error };
+    }
+    revalidatePath('/admin/adressbook');
+    redirect('/admin/adressbook');
+};
+
+
+export const createStaffExcelFile = async (data: any, jsonData: any) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        jsonData.forEach(async (i: any) => await prisma.staff.create({
+            data: {
+                name: i["ФИО"],
+                company: data.company,
+                dept: data.dept,
+                post: String(i["Должность"]),
+                email: String(i["email"]),
+                phone: String(i["Рабочий телефон"]),
+                inphone: String(i["Внутренний телефон"]),
+                mobile: String(i["Личный телефон"]),
+                otdelId: data.otdelId,
+            }
+        }));
 
     } catch (error) {
         console.error(error);

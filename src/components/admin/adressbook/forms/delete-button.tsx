@@ -7,7 +7,7 @@ export function DeleteStaffButton({ id }: { id: string }) {
 
     return (
         <form action={deleteStaffWithId}>
-            <Button type="submit" variant="ghost" ><Trash className=" h-5 w-5" /></Button>
+            <Button type="submit" variant="ghost"><Trash className=" h-5 w-5" /></Button>
         </form>
     );
 }

@@ -1,5 +1,6 @@
 import { AdressbookForm } from "@/components/admin/adressbook/forms/adressbook-form";
 import { CompanyForm } from "@/components/admin/adressbook/forms/company-form";
+import { ExcelImportForm } from "@/components/admin/adressbook/forms/excel-import-form";
 import { OtdelForm } from "@/components/admin/adressbook/forms/otdel-form";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
@@ -23,7 +24,7 @@ export default function AdminNewAdressbookPage() {
                     </h1>
                 </CardHeader>
                 <CardContent className="grid gap-6">
-                    Идет разработка формы
+                    <ExcelImportForm />
                 </CardContent>
             </Card>
         </div>
