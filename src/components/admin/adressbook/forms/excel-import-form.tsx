@@ -23,7 +23,6 @@ const FormSchema = z.object({
     company: z.string({ required_error: "Выберите организацию" }),
     dept: z.string({ required_error: "Выберите отдел или депортамен" }),
     otdelId: z.string(),
-    jsonData: z.array(z.string()),
 })
 
 export type AdressbookFormProps = {
@@ -59,7 +58,7 @@ export function ExcelImportForm() {
             company: "",
             dept: "",
             otdelId: "",
-            jsonData: [],
+
         },
         resolver: zodResolver(FormSchema),
     })
@@ -67,7 +66,9 @@ export function ExcelImportForm() {
     const [listCompany, setListCompany] = useState<ICompanyList[]>([]);
     const [listOtdels, setListOtdels] = useState<IOtdelList[]>([]);
     const [selectedCompanyId, setSelectedCompanyId] = useState('');
-    const [jsonData, setJsonData] = useState([]);
+    const [jsonData, setJsonData] = useState("");
+    const [firstSelectionMade, setFirstSelectionMade] = useState(false);
+    const [loadingSecondSelector, setLoadingSecondSelector] = useState(false);
     let watchCompany = watch('company');
 
     useEffect(() => {
@@ -82,6 +83,7 @@ export function ExcelImportForm() {
         async function getOtdelsList() {
             const res = await getDataOtdelsList(selectedCompanyId);
             setListOtdels(res);
+            setLoadingSecondSelector(false);
         }
         if (watchCompany) {
             getOtdelsList();
@@ -100,19 +102,18 @@ export function ExcelImportForm() {
 
     const handleSelectChangeCompany = (selectedItemC: any) => {
         setValue("company", selectedItemC.name);
-        setSelectedCompanyId(selectedItemC.id)
+        setSelectedCompanyId(selectedItemC.id);
+        setFirstSelectionMade(true);
+        setLoadingSecondSelector(true);
     };
 
     async function handleFile(e: any) {
         let file = e;
-        /* get raw data */
         const data = await file.arrayBuffer();
-        /* data is an ArrayBuffer */
         const wb = read(data);
         const ws = wb.Sheets[wb.SheetNames[0]];
         const json: any = utils.sheet_to_json(ws);
-        setJsonData(json);
-        console.log('Отработал парсинг', json)
+        setJsonData(JSON.stringify(json));
     }
 
     return (
@@ -146,7 +147,7 @@ export function ExcelImportForm() {
                         name="otdelId"
                         render={({ field }) => (
                             <FormItem>
-                                <Select onValueChange={
+                                <Select disabled={!firstSelectionMade} onValueChange={
                                     (selectedItemId) => {
                                         // Находим объект item по id в списке компаний
                                         const selectedItem = listOtdels.find(otdel => otdel.id === selectedItemId);
@@ -159,11 +160,17 @@ export function ExcelImportForm() {
                                             <SelectValue placeholder="Выберите департамент" defaultValue={field.value} />
                                         </SelectTrigger>
                                     </FormControl>
-                                    <SelectContent>
-                                        {listOtdels.map((item) => (
-                                            <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
-                                        ))}
-                                    </SelectContent>
+                                    {loadingSecondSelector ? (
+                                        <SelectContent>
+                                            <Spinner />
+                                        </SelectContent>
+                                    ) : (
+                                        <SelectContent>
+                                            {listOtdels.map((item) => (
+                                                <SelectItem key={item.id} value={item.id}>{item.name}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    )}
                                 </Select>
                             </FormItem>
                         )}

@@ -68,7 +68,10 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
-                <Button variant="outline" className="mr-2 ml-2"><Link href="/admin/new">Добавить компанию</Link> <PlusIcon className="h-5 md:ml-4" /></Button>
+                <div>
+                    <Button variant="outline" className="mr-2 ml-2"><Link href="/admin/new">Добавить компанию</Link> <PlusIcon className="h-5 md:ml-4" /></Button>
+                    <Button variant="outline" className="mr-2 ml-2"><Link href="/admin/otdels/new">Добавить отдел</Link> <PlusIcon className="h-5 md:ml-4" /></Button>
+                </div>
             </div>
 
             <Table id="table">

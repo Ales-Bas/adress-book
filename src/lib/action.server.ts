@@ -270,27 +270,29 @@ export const createStaffExcelFile = async (data: any, jsonData: any) => {
         if (!session || session.user.role !== "ADMIN") {
             throw new Error("Доступ запрещен!")
         }
+        const json = JSON.parse(jsonData)
+        const jsonBulk = json.map((i: any) => ({
 
-        jsonData.forEach(async (i: any) => await prisma.staff.create({
-            data: {
-                name: i["ФИО"],
-                company: data.company,
-                dept: data.dept,
-                post: String(i["Должность"]),
-                email: String(i["email"]),
-                phone: String(i["Рабочий телефон"]),
-                inphone: String(i["Внутренний телефон"]),
-                mobile: String(i["Личный телефон"]),
-                otdelId: data.otdelId,
-            }
-        }));
+            name: i.hasOwnProperty("ФИО") ? i["ФИО"] : "",
+            company: data.company,
+            dept: data.dept,
+            post: i.hasOwnProperty("Должность") ? String(i["Должность"]) : "",
+            email: i.hasOwnProperty("Почта") ? String(i["Почта"]) : "",
+            phone: i.hasOwnProperty("Рабочий телефон") ? String(i["Рабочий телефон"]) : "",
+            inphone: i.hasOwnProperty("Внутренний телефон") ? String(i["Внутренний телефон"]) : "",
+            mobile: i.hasOwnProperty("Личный телефон") ? String(i["Личный телефон"]) : "",
+            otdelId: data.otdelId,
+        }))
 
+        await prisma.staff.createMany({
+            data: jsonBulk
+        });
     } catch (error) {
         console.error(error);
         return { message: error };
     }
-    revalidatePath('/admin/adressbook');
-    redirect('/admin/adressbook');
+    revalidatePath(`/otdel/${data.otdelId}`);
+    redirect(`/otdel/${data.otdelId}`);
 };
 
 export const deleteStaffAdressbook = async (id: string) => {

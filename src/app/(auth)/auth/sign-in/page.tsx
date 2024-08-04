@@ -3,16 +3,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function AuthPage() {
     return (
-        <div className='w-screen h-screen flex items-center justify-center'>
-            <Card>
-                <CardHeader>
+        <div className="container relative  flex-col items-center justify-center self-center pt-24">
+            <Card className="max-w-[350px] mx-auto">
+                <CardHeader className="flex flex-col space-y-2 text-center">
                     <CardTitle>Пожалуйста авторизируйтесь</CardTitle>
                     <CardDescription >Ссылка для доступа будет отправлена на e-mail</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="grid gap-4">
                     <SignInForm />
                 </CardContent>
             </Card>
         </div>
+
     )
 }

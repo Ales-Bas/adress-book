@@ -82,6 +82,7 @@ export function DataTable<TData, TValue>({
                     className="max-w-sm mr-1"
                 />
                 <Button variant="outline" className="mr-2 ml-2"><Link href="/admin/adressbook/new">Добавить запись</Link> <PlusIcon className="h-5 md:ml-4" /></Button>
+                <Button variant="outline" className="mr-2 ml-2"><Link href="/admin/adressbook/export">Импортировать из Excel</Link> <PlusIcon className="h-5 md:ml-4" /></Button>
             </div>
             <Table id="table">
                 <TableHeader>

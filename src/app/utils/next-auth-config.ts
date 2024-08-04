@@ -13,6 +13,9 @@ export const nextAuthConfig: AuthOptions = {
       return createUserUseCase.exec(user);
     },
   } as AuthOptions["adapter"],
+  session: {
+    maxAge: 60 * 60, // 1 час
+  },
   callbacks: {
     session: async ({ session, user }) => {
       return {
