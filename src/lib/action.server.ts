@@ -262,7 +262,6 @@ export const updateStaffAdressbook = async (staffid: any, {
     redirect('/admin/adressbook');
 };
 
-
 export const createStaffExcelFile = async (data: any, jsonData: any) => {
     try {
         const session = await getAppSessionServer();
@@ -316,7 +315,77 @@ export const deleteStaffAdressbook = async (id: string) => {
     }
 }
 
+export const trueViemStaffAdressbook = async (id: string) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        const idTrue = await prisma.staff.update({
+            where: {
+                id: id,
+            },
+            data: {
+                viem: true,
+            }
+        })
+        revalidatePath('/admin/adressbook');
+        redirect('/admin/adressbook');
+        return { message: 'Запись обновлена' };
+
+    } catch (error) {
+        return { message: "Ошибка базы данных: не удалось удалить запись" }
+    }
+}
+
+export const falseViemStaffAdressbook = async (id: string) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        const idTrue = await prisma.staff.update({
+            where: {
+                id: id,
+            },
+            data: {
+                viem: false,
+            }
+        })
+        revalidatePath('/admin/adressbook');
+        redirect('/admin/adressbook');
+        return { message: 'Запись обновлена' };
+
+    } catch (error) {
+        return { message: "Ошибка базы данных: не удалось удалить запись" }
+    }
+}
+
 export const getAllStaff = async () => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+        const data = await prisma.staff.findMany({
+            orderBy: {
+                name: 'asc'
+            },
+
+        });
+
+        return data;
+    } catch (error) {
+        return { message: ` Ошибка базы данных: ${error}` }
+    }
+};
+
+export const getViemAllStaff = async () => {
     try {
         const session = await getAppSessionServer();
 
@@ -324,6 +393,9 @@ export const getAllStaff = async () => {
             throw new Error("Доступ запрещен!")
         }
         const data = await prisma.staff.findMany({
+            where: {
+                viem: true,
+            },
             orderBy: {
                 name: 'asc'
             },
@@ -378,6 +450,7 @@ export const getSelectOtdelStaff = async (id: any) => {
         const data = await prisma.staff.findMany({
             where: {
                 otdelId: id,
+                viem: true,
             },
         });
 
@@ -420,12 +493,14 @@ export const getSelectCompanyStaff = async (id: any) => {
         const data = await prisma.otdel.findMany({
             where: {
                 companyId: id,
-
             },
             include: {
-                staffs: true,
+                staffs: {
+                    where: {
+                        viem: true,
+                    },
+                }
             }
-
         });
         return data;
 

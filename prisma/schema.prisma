@@ -92,7 +92,7 @@ model Otdel {
 }
 
 model Staff {
-  id      String @id @default(cuid())
+  id      String  @id @default(cuid())
   name    String
   company String
   dept    String
@@ -101,6 +101,7 @@ model Staff {
   phone   String
   inphone String
   mobile  String
+  viem    Boolean @default(true)
 
   otdel   Otdel  @relation(fields: [otdelId], references: [id])
   otdelId String @map("otdel_id")

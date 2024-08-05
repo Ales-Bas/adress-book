@@ -1,10 +1,10 @@
 import { columns } from "@/components/staff/columns"
 import { DataTable } from "@/components/staff/data-table"
-import { getAllStaff } from "@/lib/action.server"
+import { getViemAllStaff } from "@/lib/action.server"
 
 
 export default async function AdressPage() {
-  const data = await getAllStaff();
+  const data = await getViemAllStaff();
   const title = "Общий список сотрудников"
 
   if (!Array.isArray(data)) {

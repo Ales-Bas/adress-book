@@ -1,10 +1,12 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, SquarePen } from "lucide-react";
+import { ArrowUpDown, Eye, SquarePen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { DeleteStaffButton } from "./forms/delete-button";
+import { ViemStaffButton } from "./forms/eye-button";
+import { ViemOffStaffButton } from "./forms/eyeoff-button";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -18,6 +20,7 @@ export type Staff = {
     phone: string
     inphone: string
     mobile: string
+    viem: boolean
 }
 
 export const columns: ColumnDef<Staff>[] = [
@@ -65,6 +68,22 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "mobile",
         header: "Мобильный телефон",
+    },
+    {
+        accessorKey: "viem",
+        header: "Статус",
+        cell: ({ cell, row }) => {
+            if (row.original.viem) {
+                return <div className="flex">
+                    <ViemOffStaffButton id={row.original.id} />
+                </div>
+            }
+            return <div className="flex">
+                <ViemStaffButton id={row.original.id} />
+            </div>
+
+
+        }
     },
     {
         accessorKey: "id",
