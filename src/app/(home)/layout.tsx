@@ -13,7 +13,7 @@ export default async function Layout({
         <>
             <AuthorizedGuard>
                 <main className="flex min-h-screen flex-col items-center justify-between pt-10">
-                    <div className=" grid grid-cols-[250px_minmax(900px,_1fr)] gap-2 justify-items-center container">
+                    <div className=" grid grid-cols-[150px_minmax(900px,_1fr)] gap-2 justify-items-center container">
                         <SelectTable data={dataSelect} />
                         {children}
                     </div>

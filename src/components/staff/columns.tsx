@@ -33,36 +33,45 @@ export const columns: ColumnDef<Staff>[] = [
                 </Button>
             )
         },
+        size: 128,
     },
     {
         accessorKey: "company",
         header: "Юридическое лицо",
+        size: 140,
     },
     {
         accessorKey: "dept",
         header: "Департамент",
+        size: 155,
     },
     {
         accessorKey: "post",
         header: "Должность",
+        size: 147,
     },
     {
         accessorKey: "email",
         header: "Почта",
+        size: 240,
         cell: ({ cell, row }) => {
             return <Link className="text-blue" href={`mailto:${row.original.email}`}>{row.original.email}</Link>
         }
+
     },
     {
         accessorKey: "phone",
         header: "Внешний (городской) телефон",
+        size: 132,
     },
     {
         accessorKey: "inphone",
-        header: "Внутренний телефон",
+        header: "Внутр. номер",
+        size: 50,
     },
     {
         accessorKey: "mobile",
         header: "Мобильный телефон",
+        size: 132,
     },
 ]

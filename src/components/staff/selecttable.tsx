@@ -11,15 +11,15 @@ import { useRouter } from "next/navigation";
 
 
 export default function SelectTable({ data }: { data: any }) {
-    const router = useRouter()
+    const router = useRouter();
     const [value, setValue] = useState<any>();
     const [valueOtdel, setValueOtdel] = useState<any>();
     const [selectedOption, setSelectedOption] = useState<any>();
 
     return (
         <div className="printnone">
-            <Link href="/" className="justify-items-start text-base font-medium ">
-                <div className="inline-flex items-center hover:bg-accent w-full h-10 rounded-md">
+            <Link href="/" onClick={() => setValue(false)} className="text-sm font-medium ">
+                <div className="inline-flex items-center justify-center hover:bg-accent w-full h-10 rounded-md">
                     Все организации
                 </div>
             </Link>
