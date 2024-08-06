@@ -65,13 +65,13 @@ export const columns: ColumnDef<Staff>[] = [
         size: 137,
     },
     {
-        accessorKey: "mobile",
-        header: "Мобильный телефон",
-        size: 137,
-    },
-    {
         accessorKey: "inphone",
         header: "Внутр. номер",
         size: 50,
+    },
+    {
+        accessorKey: "mobile",
+        header: "Мобильный телефон",
+        size: 137,
     },
 ]
