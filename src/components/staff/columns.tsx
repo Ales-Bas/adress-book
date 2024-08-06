@@ -38,7 +38,7 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "company",
         header: "Юридическое лицо",
-        size: 140,
+        size: 139,
     },
     {
         accessorKey: "dept",
@@ -48,12 +48,12 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "post",
         header: "Должность",
-        size: 146,
+        size: 145,
     },
     {
         accessorKey: "email",
         header: "Почта",
-        size: 230,
+        size: 227,
         cell: ({ cell, row }) => {
             return <Link className="text-blue" href={`mailto:${row.original.email}`}>{row.original.email}</Link>
         }
