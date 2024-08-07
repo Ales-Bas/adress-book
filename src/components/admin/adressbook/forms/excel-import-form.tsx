@@ -114,6 +114,7 @@ export function ExcelImportForm() {
         const ws = wb.Sheets[wb.SheetNames[0]];
         const json: any = utils.sheet_to_json(ws);
         setJsonData(JSON.stringify(json));
+        console.log(json);
     }
 
     return (

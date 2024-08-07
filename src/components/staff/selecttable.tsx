@@ -18,12 +18,12 @@ export default function SelectTable({ data }: { data: any }) {
 
     return (
         <div className="printnone">
-            <Link href="/" onClick={() => setValue(false)} className="text-sm font-medium ">
+            <Link href="/" onClick={() => setValue("one")} className="text-sm font-medium ">
                 <div className="inline-flex items-center justify-center hover:bg-accent w-full h-10 rounded-md">
                     Все организации
                 </div>
             </Link>
-            <Accordion type="single" collapsible value={value} >
+            <Accordion type="single" collapsible value={value} onValueChange={setValue} >
                 {data.map((company: any) => (
                     <AccordionItem key={company.id} value={company.id}>
                         <AccordionTrigger onClick={() => router.push(`/company/${company.id}`)}>{company.name}</AccordionTrigger>
