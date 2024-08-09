@@ -11,11 +11,11 @@ export async function StaffNav() {
 
     return (
         <div className="printnone">
-            <nav className="flex items-start text-center md:items-center gap-2 text-base font-medium flex-col md:flex-row mb-4 container">
+            <nav className="flex items-start text-center md:items-center gap-6 text-base font-medium flex-col md:flex-row mb-4 container">
                 {dataNav.map((item) => (
                     <Link
                         key={item.id}
-                        className="transition-colors justify-center hover:bg-accent rounded-md ml-1"
+                        className="transition-colors justify-center hover:bg-accent rounded-md p-2"
                         href={`/company/${item.id}`}
                     >
                         {item.name}

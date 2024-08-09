@@ -32,32 +32,39 @@ export const columns: ColumnDef<Staff>[] = [
                 </Button>
             )
         },
+        size: 138,
     },
     {
         accessorKey: "dept",
         header: "Департамент",
+        size: 163,
     },
     {
         accessorKey: "post",
         header: "Должность",
+        size: 166,
     },
     {
         accessorKey: "email",
         header: "Почта",
         cell: ({ cell, row }) => {
             return <Link className="text-blue" href={`mailto:${row.original.email}`}>{row.original.email}</Link>
-        }
+        },
+        size: 225,
     },
     {
         accessorKey: "phone",
         header: "Внешний (городской) телефон",
+        size: 130,
     },
     {
         accessorKey: "inphone",
         header: "Внутр. телефон",
+        size: 80,
     },
     {
         accessorKey: "mobile",
         header: "Мобильный телефон",
+        size: 130
     },
 ]
