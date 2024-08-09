@@ -67,6 +67,9 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "inphone",
         header: "Внутр. номер",
+        cell: ({ cell, row }) => {
+            return <div className="pl-6">{row.original.inphone}</div>
+        },
         size: 80,
     },
     {
