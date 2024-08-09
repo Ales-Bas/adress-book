@@ -37,12 +37,12 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "dept",
         header: "Департамент",
-        size: 163,
+        size: 153,
     },
     {
         accessorKey: "post",
         header: "Должность",
-        size: 166,
+        size: 157,
     },
     {
         accessorKey: "email",
@@ -55,7 +55,7 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "phone",
         header: "Внешний (городской) телефон",
-        size: 130,
+        size: 138,
     },
     {
         accessorKey: "inphone",
@@ -65,6 +65,6 @@ export const columns: ColumnDef<Staff>[] = [
     {
         accessorKey: "mobile",
         header: "Мобильный телефон",
-        size: 130
+        size: 140
     },
 ]
