@@ -4,7 +4,7 @@ import { getSelectOtdelStaff } from "@/lib/action.server"
 
 
 export default async function TableSelectPage({ params }: any) {
-    const id = params.id;
+    const id = params.otdelid;
     const selectOtdel = await getSelectOtdelStaff(id);
 
     if (selectOtdel && Array.isArray(selectOtdel) && typeof selectOtdel.length === 'number') {

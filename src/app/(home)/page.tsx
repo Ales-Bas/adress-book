@@ -1,5 +1,6 @@
 import { columns } from "@/components/staff/columns"
 import { DataTable } from "@/components/staff/data-table"
+import { StaffNav } from "@/components/staff/nav-staff-menu";
 import { getViemAllStaff } from "@/lib/action.server"
 
 
@@ -12,6 +13,9 @@ export default async function AdressPage() {
   }
 
   return (
-    <DataTable columns={columns} data={data} titleTable={title} />
+    <div className="container">
+      <StaffNav />
+      <DataTable columns={columns} data={data} titleTable={title} />
+    </div>
   )
 }

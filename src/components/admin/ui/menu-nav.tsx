@@ -22,6 +22,12 @@ export function AdminNav() {
                 >
                     Пользователи
                 </Link>
+                <Link
+                    className="transition-colors hover:text-foreground/80 text-foreground/60"
+                    href="/admin/version"
+                >
+                    Версии
+                </Link>
             </nav>
         </div>
     );

@@ -452,6 +452,9 @@ export const getSelectOtdelStaff = async (id: any) => {
                 otdelId: id,
                 viem: true,
             },
+            orderBy: {
+                name: 'asc'
+            },
         });
 
         return data;
@@ -499,8 +502,12 @@ export const getSelectCompanyStaff = async (id: any) => {
                     where: {
                         viem: true,
                     },
+                    orderBy: {
+                        name: 'asc'
+                    },
                 }
-            }
+
+            },
         });
         return data;
 

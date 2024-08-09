@@ -54,7 +54,7 @@ export const columns: ColumnDef<Staff>[] = [
     },
     {
         accessorKey: "inphone",
-        header: "Внутренний телефон",
+        header: "Внутр. телефон",
     },
     {
         accessorKey: "mobile",
