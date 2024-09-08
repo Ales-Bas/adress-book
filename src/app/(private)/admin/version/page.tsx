@@ -6,6 +6,24 @@ export default async function VersionPage() {
         <div className="flex flex-col items-center justify-center container py-10">
             <h1 className="text-2xl font-bold">Изменения версий</h1>
             <div className="justify-start w-full mx-32 py-5">
+                <h2 className="flex items-center justify-center font-bold py-2">Версия сайта 1.3.9</h2>
+                <ul>
+                    <li className="py-2">
+                        1. Добавлена маска телефона в поиск по телефону
+                        <div className="ml-4">Позволяет приводить в нужный поисковый формат вводимый или вставляемый номер телефона.</div>
+                    </li>
+                    <li className="py-2">
+                        2. Корректировка запроса для отображения сотрудиков по алфавиту
+                        <div className="ml-4">При навигации по меню главной страницы, сотрудники отображаються по алфавиту по умолчанию.
+                        </div>
+                    </li>
+                    <li className="py-2">
+                        3. Работа с базой данных
+                        <div className="ml-4">Добавление и корректировка данных.</div>
+                    </li>
+                </ul>
+            </div>
+            <div className="justify-start w-full mx-32 py-5">
                 <h2 className="flex items-center justify-center font-bold py-2">Версия сайта 1.3.8</h2>
                 <ul>
                     <li className="py-2">

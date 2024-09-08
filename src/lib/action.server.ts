@@ -5,7 +5,6 @@ import { getAppSessionServer } from "@/app/utils/get-app-session.server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-
 export const getAllUsers = async () => {
     const session = await getAppSessionServer();
 
@@ -290,8 +289,8 @@ export const createStaffExcelFile = async (data: any, jsonData: any) => {
         console.error(error);
         return { message: error };
     }
-    revalidatePath(`/otdel/${data.otdelId}`);
-    redirect(`/otdel/${data.otdelId}`);
+    revalidatePath('/admin/adressbook');
+    redirect('/admin/adressbook');
 };
 
 export const deleteStaffAdressbook = async (id: string) => {
@@ -508,6 +507,9 @@ export const getSelectCompanyStaff = async (id: any) => {
                 }
 
             },
+            orderBy: {
+                name: 'asc'
+            }
         });
         return data;
 

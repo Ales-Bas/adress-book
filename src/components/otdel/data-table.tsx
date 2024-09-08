@@ -24,6 +24,7 @@ import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { Printer } from "lucide-react"
 import LoadExcelButton from "../downloadExelBtn"
+import { InputPhone } from "../ui/input-phone-mask"
 
 interface DataTableProps<TData, TValue, Ttitle> {
     columns: ColumnDef<TData, TValue>[]
@@ -101,7 +102,7 @@ export function DataTable<TData, TValue, Ttitle>({
                     }
                     className="max-w-sm mr-1"
                 />
-                <Input
+                <InputPhone
                     placeholder="Поиск по мобильному телефону..."
                     value={(table.getColumn("mobile")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
