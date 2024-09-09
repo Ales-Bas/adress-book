@@ -502,14 +502,11 @@ export const getSelectCompanyStaff = async (id: any) => {
                         viem: true,
                     },
                     orderBy: {
-                        name: 'asc'
+                        name: 'asc',
                     },
                 }
 
             },
-            orderBy: {
-                name: 'asc'
-            }
         });
         return data;
 
