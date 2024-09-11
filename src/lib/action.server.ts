@@ -81,6 +81,51 @@ export const createUser = async ({
     redirect('/admin/users');
 };
 
+export const createUserExcelFile = async (jsonData: any) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+        const json = JSON.parse(jsonData);
+        const existingEmails = await prisma.user.findMany({
+            select: { email: true },
+        });
+
+        const existingEmailMap = new Map(
+            existingEmails.map(email => [email.email.toLowerCase(), true])
+        );
+
+        const jsonBulk = json.map((i: any) => {
+            const email = i.hasOwnProperty("Почта") ? String(i["Почта"]).toLowerCase() : "";
+
+            if (existingEmailMap.has(email)) {
+                console.warn(`Удаление существующего пользователя с email: ${email}`);
+                return null;
+            }
+
+            return {
+                name: i.hasOwnProperty("ФИО") ? i["ФИО"] : "",
+                email: email,
+            };
+        }).filter(Boolean);
+
+        if (jsonBulk.length === 0) {
+            return { message: "Все пользователи уже существуют." };
+        }
+
+        await prisma.user.createMany({
+            data: jsonBulk,
+        });
+    } catch (error) {
+        console.error(error);
+        return { message: error };
+    }
+    revalidatePath('/admin/users');
+    redirect('/admin/users');
+};
+
 export const updateUser = async (userid: any, {
     email,
     role,
