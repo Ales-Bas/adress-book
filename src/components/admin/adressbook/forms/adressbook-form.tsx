@@ -117,7 +117,7 @@ export function AdressbookForm({ staff }: any) {
             const staffid = staff.id;
             await updateStaffAdressbook(staffid, data);
         } else {
-            await createStaffAdressbook(data)
+            await createStaffAdressbook(data);
         }
     }
 

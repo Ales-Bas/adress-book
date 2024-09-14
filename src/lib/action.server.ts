@@ -242,6 +242,28 @@ export const createStaffAdressbook = async ({
             throw new Error("Доступ запрещен!")
         }
 
+        if (email !== "") {
+            let getUser = await prisma.user.findUnique({
+                where: {
+                    email: email,
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    role: true,
+                    name: true,
+                },
+            })
+            if (getUser === null) {
+                const data = await prisma.user.create({
+                    data: {
+                        name,
+                        email,
+                    }
+                });
+            }
+        }
+
         const data = await prisma.staff.create({
             data: {
                 name,
@@ -280,6 +302,29 @@ export const updateStaffAdressbook = async (staffid: any, {
         if (!session || session.user.role !== "ADMIN") {
             throw new Error("Доступ запрещен!")
         }
+
+        if (email !== "") {
+            let getUser = await prisma.user.findUnique({
+                where: {
+                    email: email,
+                },
+                select: {
+                    id: true,
+                    email: true,
+                    role: true,
+                    name: true,
+                },
+            })
+            if (getUser === null) {
+                const data = await prisma.user.create({
+                    data: {
+                        name,
+                        email,
+                    }
+                });
+            }
+        }
+
 
         const data = await prisma.staff.update({
             where: {

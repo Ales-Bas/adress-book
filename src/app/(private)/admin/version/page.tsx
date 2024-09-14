@@ -6,6 +6,26 @@ export default async function VersionPage() {
         <div className="flex flex-col items-center justify-center container py-10">
             <h1 className="text-2xl font-bold">Изменения версий</h1>
             <div className="justify-start w-full mx-32 py-5">
+                <h2 className="flex items-center justify-center font-bold py-2">Версия сайта 1.3.10</h2>
+                <ul>
+                    <li className="py-2">
+                        1. Добавлена функция добавления пользователя при создании записи в адрескниге
+                        <div className="ml-4">Если при добавлении записи, пользователя с таким email не найдено,
+                            то происходит создание учетной записи для данной записи, так же при редактировании записи в адресной книге.
+                        </div>
+                    </li>
+                    <li className="py-2">
+                        2. Добавлен импорт пользователей из excel файла
+                        <div className="ml-4">Проверяет список пользователей, удаляет уже существующих пользователей, добавляет пользователей.
+                        </div>
+                    </li>
+                    <li className="py-2">
+                        3. Работа с базой данных
+                        <div className="ml-4">Добавление пользователей.</div>
+                    </li>
+                </ul>
+            </div>
+            <div className="justify-start w-full mx-32 py-5">
                 <h2 className="flex items-center justify-center font-bold py-2">Версия сайта 1.3.9</h2>
                 <ul>
                     <li className="py-2">
