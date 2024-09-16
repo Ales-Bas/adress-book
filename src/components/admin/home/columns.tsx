@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, SquarePen } from "lucide-react";
 import Link from "next/link";
+import { DeleteCompanyButton } from "./delete-company-button";
 
 export type Company = {
     id: string
@@ -36,6 +37,7 @@ export const columns: ColumnDef<Company>[] = [
         cell: ({ cell, row }) => {
             return <div className="flex">
                 <Button variant="ghost"><Link href={`/admin/${row.original.id}`}><SquarePen className=" h-5 w-5" /></Link></Button>
+                <DeleteCompanyButton id={row.original.id} />
             </div>
         }
     }

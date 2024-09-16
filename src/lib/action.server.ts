@@ -697,6 +697,27 @@ export const updateCompany = async (companyid: any, {
     redirect('/admin');
 };
 
+export const deleteCompany = async (id: string) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        const idDelete = await prisma.company.delete({
+            where: {
+                id: id,
+            }
+        })
+        revalidatePath('/admin');
+        return { message: 'Компания удалена!' };
+
+    } catch (error) {
+        return { message: "Ошибка базы данных: не удалось удалить объект!" }
+    }
+}
+
 export const getOtdelById = async (id: string) => {
     try {
         const session = await getAppSessionServer();
@@ -773,3 +794,24 @@ export const updateOtdel = async (otdelid: any, {
     revalidatePath(`/admin/otdels/${companyId}`);
     redirect(`/admin/otdels/${companyId}`);
 };
+
+export const deleteOtdel = async (id: string) => {
+    try {
+        const session = await getAppSessionServer();
+
+        if (!session || session.user.role !== "ADMIN") {
+            throw new Error("Доступ запрещен!")
+        }
+
+        const idDelete = await prisma.otdel.delete({
+            where: {
+                id: id,
+            }
+        })
+        revalidatePath(`/admin/otdels/`);
+        return { message: 'Отдел удален' };
+
+    } catch (error) {
+        return { message: "Ошибка базы данных: не удалось удалить объект" }
+    }
+}

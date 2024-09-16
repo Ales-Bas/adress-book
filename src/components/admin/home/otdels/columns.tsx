@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, SquarePen } from "lucide-react";
 import Link from "next/link";
+import { DeleteOtdelButton } from "./delete-otdel-button";
 
 export type Otdels = {
     id: string
@@ -30,6 +31,7 @@ export const columns: ColumnDef<Otdels>[] = [
         cell: ({ cell, row }) => {
             return <div className="flex">
                 <Button variant="ghost"><Link href={`/admin/otdels/edit/${row.original.id}`}><SquarePen className=" h-5 w-5" /></Link></Button>
+                <DeleteOtdelButton id={row.original.id} />
             </div>
         }
     }
